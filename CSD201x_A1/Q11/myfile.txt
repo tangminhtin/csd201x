@@ -1,0 +1,1 @@
+Bubble sort is a simple algorithm. Thư basic operation is comparing two adjacent elements, If they don't stay in the correct order, they must be swapped. The operations can be performed from top to bottom (left to right) or from bottom to top (right to left). Bubble sort is also known as sorting by direct comparison, as it uses the comparison operation between elements.
