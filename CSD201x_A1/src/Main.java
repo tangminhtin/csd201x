@@ -21,10 +21,12 @@ public class Main {
 
     // Contains a list of MyFile
     private MyFile[] files;
+    private MyFile[] textFiles;
 
     // Ctor
     public Main() {
         files = null;
+        textFiles = null;
     }
     
 
@@ -36,6 +38,19 @@ public class Main {
         List<MyFile> listFiles = new ArrayList<>();
         loadFiles(folder, listFiles);
         files = listFiles.stream().toArray(MyFile[]::new);
+        loadTextFile();
+    }
+    
+    // Get information of text files
+    private void loadTextFile() {
+        List<MyFile> listTextFiles = new ArrayList<>();
+        
+        for(MyFile f: files) {
+            if(f.getName().toLowerCase().endsWith(".txt")) {
+                listTextFiles.add(new MyFile(f.getName(), f.getSize(), f.getFullPath()));
+            }
+        }
+        textFiles = listTextFiles.stream().toArray(MyFile[]::new);
     }
 
     // Read all file with input folder name and add it to a list of object
@@ -82,22 +97,22 @@ public class Main {
     public void selectionSort() {
 
         // Read all element in array
-        for (int i = 0; i < files.length - 1; i++) {
+        for (int i = 0; i < textFiles.length - 1; i++) {
             int minIndex = i;   // Set current index of the first element as a minimum
 
             /* Check current minimum value with each element in an array
             by compare size of files. If size is less then, set index of j as minIndex */
-            for (int j = i + 1; j < files.length; j++) {
-                if (files[j].getSize() < files[minIndex].getSize()) {
+            for (int j = i + 1; j < textFiles.length; j++) {
+                if (textFiles[j].getSize() < textFiles[minIndex].getSize()) {
                     minIndex = j;
                 }
             }
 
             // Swap minimum element with current element
             // With mean smaller value move to the left hand side
-            MyFile temp = files[minIndex];
-            files[minIndex] = files[i];
-            files[i] = temp;
+            MyFile temp = textFiles[minIndex];
+            textFiles[minIndex] = textFiles[i];
+            textFiles[i] = temp;
         }
     }
 
@@ -105,19 +120,19 @@ public class Main {
     public void insertionSort() {
 
         // Read all element in array
-        for (int i = 0; i < files.length; i++) {
-            MyFile current = files[i];  // Current element is selected
+        for (int i = 0; i < textFiles.length; i++) {
+            MyFile current = textFiles[i];  // Current element is selected
             int j = i - 1;
 
             /* Check if the next element(size) in array is greater than element 
             in a sublist of sorted (also check all element) to find the suitable location */
-            while (j >= 0 && files[j].getSize() >= current.getSize()) {
-                files[j + 1] = files[j]; // Move from the left to the right
+            while (j >= 0 && textFiles[j].getSize() >= current.getSize()) {
+                textFiles[j + 1] = textFiles[j]; // Move from the left to the right
                 j--;    // Move from the right to the left
             }
 
             // Set current element in suitable location
-            files[j + 1] = current;
+            textFiles[j + 1] = current;
         }
     }
 
@@ -132,37 +147,37 @@ public class Main {
                     selectionSort();
                     break;
                 case QUICKSORT:
-                    quickSort(0, files.length - 1);
+                    quickSort(0, textFiles.length - 1);
                     break;
                 default:
                     break;
             }
         }
         // Output result after sorting
-        list(files);
+        list(textFiles);
     }
 
     // Sort the list of files ascending by name (use quick sort)
     public void quickSort(int start, int end) {
         if (start < end) {
             /* Put pivot at right place, and the pivot value divides the list into two part */
-            MyFile pivot = files[end];      // Hold the last element as a pivot
+            MyFile pivot = textFiles[end];      // Hold the last element as a pivot
             int iPart = start;              // Index of smaller element 
             for (int j = start; j < end; j++) {
                 // If current file name is less than pivot file name, then move to left of pivot
-                if ((files[j].getName().toLowerCase().compareTo(pivot.getName().toLowerCase()) < 0)) {
+                if ((textFiles[j].getName().toLowerCase().compareTo(pivot.getName().toLowerCase()) < 0)) {
                     // Swap files[iPart] and file[j]
-                    MyFile tmp = files[iPart];
-                    files[iPart] = files[j];
-                    files[j] = tmp;
+                    MyFile tmp = textFiles[iPart];
+                    textFiles[iPart] = textFiles[j];
+                    textFiles[j] = tmp;
                     iPart++;    // Move partition by increase 1
                 }
             }
 
             // Swap pivot (files[end]) at suitable location (iPart)
-            MyFile tmp = files[end];
-            files[end] = files[iPart];
-            files[iPart] = tmp;
+            MyFile tmp = textFiles[end];
+            textFiles[end] = textFiles[iPart];
+            textFiles[iPart] = tmp;
 
             // Recursively sort elements before partition and after partition 
             quickSort(start, iPart - 1);
