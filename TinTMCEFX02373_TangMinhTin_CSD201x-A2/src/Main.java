@@ -14,7 +14,7 @@ public class Main {
 
     // Show menu for user choice
     public int showMenu() {
-        System.out.println("Book List");
+        System.out.println("----------------- Book List -----------------");
         System.out.println("1. Input Book and add to the end");
         System.out.println("2. Display books");
         System.out.println("3. Search by code");
@@ -31,39 +31,44 @@ public class Main {
         // Create new object main and bookList
         Main main = new Main();
         BookList bookList = new BookList();
-        while (true) {
-            int choice = main.showMenu();   // Get choice
-            switch (choice) {
-                case 1:
-                    bookList.addLast(); // Add last
-                    break;
-                case 2:
-                    bookList.list();    // Show out list of book
-                    break;
-                case 3:
-                    bookList.search();  // Search
-                    break;
-                case 4:
-                    bookList.addFirst();    // Add first
-                    break;
-                case 5:
-                    bookList.addAfter();    // Add after position k
-                    break;
-                case 6:
-                    bookList.deleteAt();    // Add delete at position k
-                    break;
-                case 7:
-                    bookList.sortBooks();   // Sort list of book
-                    break;
-                case 8:
-                    bookList.saveBooks();   // Save books
-                    break;
-                case 0: // Exit program
-                    System.out.println("Thank for using main program!");
-                    System.exit(0);
-                default:    // Print error
-                    System.out.println("ERROR: Your must choice from 0 to 8");
+        try {
+            while (true) {
+                int choice = main.showMenu();   // Get choice
+                switch (choice) {
+                    case 1:
+                        bookList.addLast(); // Add last
+                        break;
+                    case 2:
+                        bookList.list();    // Show out list of book
+                        break;
+                    case 3:
+                        bookList.search();  // Search
+                        break;
+                    case 4:
+                        bookList.addFirst();    // Add first
+                        break;
+                    case 5:
+                        bookList.addAfter();    // Add after position k
+                        break;
+                    case 6:
+                        bookList.deleteAt();    // Add delete at position k
+                        break;
+                    case 7:
+                        bookList.sortBooks();   // Sort list of book
+                        break;
+                    case 8:
+                        bookList.saveBooks();   // Save books
+                        break;
+                    case 0: // Exit program
+                        System.out.println("Thank for using main program!");
+                        System.exit(0);
+                    default:    // Print error
+                        System.out.println("ERROR: Your must choice from 0 to 8");
+                }
             }
+        } catch (Exception e) {
+            System.out.println("ERROR: " + e.getMessage());
         }
+
     }
 }

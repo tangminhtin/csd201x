@@ -33,6 +33,13 @@ public class BookList {
         books = this.loadBooks();   // Load book from text file
         if (books == null) {
             books = new MyList();
+
+//            books.addLast(new Book("B03", "Morning", 12, 0, 25.1));
+//            books.addLast(new Book("B01", "The noon", 10, 0, 5.2));
+//            books.addLast(new Book("B02", "The river", 5, 0, 4.3));
+//            books.addLast(new Book("B05", "Physics", 7, 0, 15.4));
+//            books.addLast(new Book("B07", "Biology", 11, 0, 12.2));
+//            books.addLast(new Book("B04", "Southern", 9, 0, 5.2));
         }
     }
 
@@ -41,9 +48,9 @@ public class BookList {
         System.out.println("Enter information of Book");
         String bCode = validation.checkDuplicateCode(books);
         String title = validation.checkEmpty("Book Title");
-        int quantity = validation.checkInt("Book Quantity");
-        int lended = validation.checkInt("Book Lended");
-        double price = validation.checkDouble("Book Price");
+        int quantity = validation.checkQuantity("Book Quantity");
+        int lended = validation.checkLended("Book Lended", quantity);
+        double price = validation.checkPrice("Book Price");
         // Return book after get information from user
         return new Book(bCode, title, quantity, lended, price);
     }
@@ -95,21 +102,18 @@ public class BookList {
 
     // Sort book asending by price
     public void sortBooks() {
-        books.insertionSort();
+//            books.insertionSort();
+        books.sort();
         books.traverse();
     }
 
     // Save books to text file
     public void saveBooks() {
         try {
-            FileOutputStream fileOut = new FileOutputStream(FILEPATH);
-            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-            // Write object to file
-            objectOut.writeObject(books);
-
-            objectOut.close();
-            fileOut.close();
-            System.out.println("Save information of all books was successfully written to a file!");
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILEPATH));
+            oos.writeObject(books); // Write object to file
+            oos.close();
+            System.out.println("Save information of all books was successful!");
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -119,13 +123,10 @@ public class BookList {
     // Load books from text file
     public MyList loadBooks() {
         try {
-            FileInputStream fileOut = new FileInputStream(FILEPATH);
-            ObjectInputStream objectOut = new ObjectInputStream(fileOut);
-            // Read objet from file
-            MyList bookList = (MyList) objectOut.readObject();
-
-            objectOut.close();
-            fileOut.close();
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILEPATH));
+            MyList bookList = (MyList) ois.readObject();  // Read objet from file
+            ois.close();
+            System.out.println("Load information of all books was successful!");
             return bookList;
         } catch (IOException | ClassNotFoundException e) {
             System.out.println(e.getMessage());

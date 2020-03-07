@@ -14,6 +14,7 @@ import java.io.Serializable;
  */
 public class MyList implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     Node<Book> head, tail, sorted;
 
     //ctor
@@ -128,9 +129,7 @@ public class MyList implements Serializable {
         }
 
         // Find the leftNode(previous) of the node to be delete 
-        for (int i = 0; i < k - 1 && leftNode != null; i++) {
-            leftNode = leftNode.next;
-        }
+        leftNode = getNode(k - 1);
 
         // if position is greater than the number of node, then print over size
         if (leftNode == null || leftNode.next == null) {
@@ -139,8 +138,7 @@ public class MyList implements Serializable {
         }
 
         System.out.println("The book with code '" + leftNode.next.info.getbCode() + "' at position '" + k + "' is deleted");
-        Node rightNode = leftNode.next.next; // Store pointer the right of the node to be deleted
-        leftNode.next = rightNode; // Unlink the deleted node from list (next of leftNode become rightNode)
+        leftNode.next = leftNode.next.next; // Unlink the deleted node from list (next of leftNode become next node)
     }
 
     //search a Node by a given book code
@@ -149,7 +147,7 @@ public class MyList implements Serializable {
 
         while (current != null) {
             // If book code in link list equal to book code of user then return current
-            if (current.info.getbCode().toLowerCase().contains(bCode.toLowerCase())) {
+            if (current.info.getbCode().toLowerCase().equals(bCode.toLowerCase())) {
                 return current;
             }
             current = current.next;
@@ -158,35 +156,23 @@ public class MyList implements Serializable {
         return null;
     }
 
-    // Sort the list of books as ascending by price 
-    public void insertionSort() {
-        sorted = null;      // Init for sorted link list
-        Node<Book> current = head;  // Store current node
+    // Sort the list of books as ascending by price by using bubble sort
+    public void sort() {
+        Node<Book> currentNode = head;
 
-        while (current != null) {
-            Node<Book> nextNode = current.next; // Store the next node for next iteration
-            sorted(current);    // Insert current in stored link links
-            current = nextNode; // Update current
-        }
-        head = sorted;      // Update head point to stored link list
-    }
+        for (int i = 0; i < this.size(); i++) {
+            Node<Book> nextNode = currentNode.next;
 
-    // Insert a new_node in a list
-    public void sorted(Node<Book> newNode) {
-        // Special case for the head end
-        if ((sorted == null) || (sorted.info.getPrice() >= newNode.info.getPrice())) {
-            newNode.next = sorted;
-            sorted = newNode;
-        } else {
-            Node<Book> current = sorted;
-            // Locate the node before the point of insertion
-            while ((current.next != null) && (current.next.info.getPrice() < newNode.info.getPrice())) {
-                current = current.next;
+            for (int j = 0; j < this.size() - i - 1; j++) {
+                if (currentNode.info.getPrice() > nextNode.info.getPrice()) {
+                    Book tmp = currentNode.info;
+                    currentNode.info = nextNode.info;
+                    nextNode.info = tmp;
+                }
+                nextNode = nextNode.next;
             }
-            newNode.next = current.next;
-            current.next = newNode;
+            currentNode = currentNode.next;
         }
-
     }
 
 }

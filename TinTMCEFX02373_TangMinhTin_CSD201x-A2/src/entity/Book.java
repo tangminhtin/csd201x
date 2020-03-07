@@ -7,12 +7,12 @@ package entity;
 
 import java.io.Serializable;
 
-
 /**
  *
  * @author TangMinhTin TinTMCEFX02373
  */
-public class Book implements Serializable{
+public class Book implements Serializable {
+
     private static final long serialVersionUID = 1L;
     private String bCode, title;
     private int quantity, lended;

@@ -19,7 +19,7 @@ public class Validation {
     public String checkEmpty(String msg) {
         while (true) {
             System.out.print(msg + ": ");
-            String str = scanner.nextLine();
+            String str = scanner.nextLine().trim();
             if (!str.isEmpty()) {
                 return str;
             } else {
@@ -28,13 +28,47 @@ public class Validation {
         }
     }
 
-    // Check integer number
+    // Check quantity
+    public int checkQuantity(String msg) {
+        while (true) {
+            System.out.print(msg + ": ");   // Print out message
+            if (scanner.hasNextInt()) { // scanner has an integer number
+                int num = scanner.nextInt();    // Get input from user
+                scanner.nextLine();     // Remove enter key
+                if (num > 0) {
+                    return num; // Return number of input
+                }
+            } else {    // Print out error if invalid
+                System.out.println("ERROR: " + msg + " must be a numeric!");
+                scanner.next(); // Move the next of input
+            }
+        }
+    }
+
+    // Check lenended
+    public int checkLended(String msg, int quantity) {
+        while (true) {
+            System.out.print(msg + ": ");   // Print out message
+            if (scanner.hasNextInt()) { // scanner has an integer number
+                int num = scanner.nextInt();    // Get input from user
+                scanner.nextLine();     // Remove enter key
+                if (num <= quantity && num >= 0) {
+                    return num; // Return number of input
+                }
+            } else {    // Print out error if invalid
+                System.out.println("ERROR: " + msg + " must be a numeric!");
+                scanner.next(); // Move the next of input
+            }
+        }
+    }
+
     public int checkInt(String msg) {
         while (true) {
             System.out.print(msg + ": ");   // Print out message
             if (scanner.hasNextInt()) { // scanner has an integer number
                 int num = scanner.nextInt();    // Get input from user
                 scanner.nextLine();     // Remove enter key
+
                 return num; // Return number of input
             } else {    // Print out error if invalid
                 System.out.println("ERROR: " + msg + " must be a numeric!");
@@ -44,13 +78,15 @@ public class Validation {
     }
 
     // Check double number
-    public Double checkDouble(String msg) {
+    public Double checkPrice(String msg) {
         while (true) {
             System.out.print(msg + ": ");   // Print out message
             if (scanner.hasNextDouble()) { // scanner has an integer number
                 double num = scanner.nextDouble();    // Get input from user
                 scanner.nextLine();     // Remove enter key
-                return num; // Return number of input
+                if (num > 0) {
+                    return num; // Return number of input
+                }
             } else {    // Print out error if invalid
                 System.out.println("ERROR: " + msg + " must be a numeric!");
                 scanner.next(); // Move the next of input

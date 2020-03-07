@@ -12,7 +12,8 @@ import java.io.Serializable;
  * @author TangMinhTin TinTMCEFX02373
  */
 public class Node<T> implements Serializable {
-    
+
+    private static final long serialVersionUID = 1L;
     public T info;
     public Node<T> next;
 
@@ -23,8 +24,8 @@ public class Node<T> implements Serializable {
         this.info = info;
         this.next = next;
     }
-    
+
     public Node(T info) {
-        this(info,null);
+        this(info, null);
     }
 }
